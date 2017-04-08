@@ -7,7 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Quick Start
 ```sh
 cd react-pomodoro
-yarn install
-yarn start
+npm install
+npm start
 ```
 Open `http://localhost:3000` to view it in your browser.
