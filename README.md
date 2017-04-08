@@ -1,5 +1,7 @@
 # react-pomodoro
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/jzse/react-pomodoro.svg)](https://greenkeeper.io/)
+
 Pomodoro timer app.
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
