@@ -24,7 +24,7 @@
     "lint": "eslint ./src; exit 0",
     "commit": "git-cz",
     "precommit": "lint-staged",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cp .netlify/_redirects build",
     "eject": "react-scripts eject"
   },
   "lint-staged": {
