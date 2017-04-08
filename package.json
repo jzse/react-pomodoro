@@ -7,17 +7,35 @@
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.0.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
+    "husky": "^0.13.3",
+    "lint-staged": "^3.4.0",
     "react-scripts": "0.9.5"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "lint": "eslint ./src",
+    "commit": "git-cz",
+    "precommit": "lint-staged",
+    "build": "react-scripts build && cp .netlify/_redirects build",
     "eject": "react-scripts eject"
-  }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "homepage": "https://jzse.github.io/react-pomodoro"
 }
