@@ -1,6 +1,7 @@
 import React from 'react';
 import Clock from './components/Clock';
 import Counter from './components/Counter';
+import Alarm from './components/Alarm';
 
 class App extends React.Component {
   constructor() {
@@ -71,7 +72,7 @@ class App extends React.Component {
       <div className="App">
         <Counter {...{ enabled, interval }} callback={this.handleInterval} />
 
-        {this.state.alarmed ? <h1>Alarm</h1> : <Clock {...this.extractClock()} isHoursHidden />}
+        {this.state.alarmed ? <Alarm /> : <Clock {...this.extractClock()} isHoursHidden />}
 
         {this.state.remaining !== 0 &&
           <button onClick={this.handleClick}>{!this.state.enabled ? 'Start' : 'Stop'}</button>}
