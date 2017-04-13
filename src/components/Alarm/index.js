@@ -6,6 +6,7 @@ class Alarm extends React.Component {
     super(props);
     this.audio = new Audio('alarm.mp3');
     this.audio.loop = true;
+    this.audio.volume = 0.2;
     this.audio.play();
   }
 

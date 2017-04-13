@@ -40,20 +40,26 @@ class App extends React.Component {
     this.handleAlarmClick = this.handleAlarmClick.bind(this);
   }
 
-  handleHistory(newState) {
+  setHistory(newState) {
     this.historyId += 1;
     const historyid = this.historyId;
-    const newStateWithHistory = {
-      ...newState,
+
+    const history = {
       history: {
         ...this.state.history,
         [historyid]: {
           id: historyid,
           name: this.state.modes[this.state.activeMode].name,
+          start: this.historyStart,
+          end: new Date(),
         },
       },
     };
-    return newStateWithHistory;
+
+    return {
+      ...newState,
+      ...history,
+    };
   }
 
   handleInterval() {
@@ -74,7 +80,7 @@ class App extends React.Component {
         ...newState,
         enabled: false,
       };
-      newState = this.handleHistory(newState);
+      newState = this.setHistory(newState);
     }
     this.setState(newState);
   }
@@ -83,6 +89,7 @@ class App extends React.Component {
     this.setState({
       enabled: !this.state.enabled,
     });
+    this.historyStart = new Date();
   }
 
   handleResetClick() {
