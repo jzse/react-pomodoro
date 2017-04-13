@@ -34,7 +34,7 @@ class Counter extends React.Component {
 
   start() {
     this.stop();
-    this.timerID = setInterval(this.callback, this.props.interval);
+    this.timerID = setInterval(this.callback, 1000);
   }
 
   stop() {

@@ -7,13 +7,13 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      interval: 1000,
+      initial: 5,
       remaining: 5,
-      enabled: true,
+      enabled: false,
       alarmed: false,
     };
     this.handleInterval = this.handleInterval.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleStartStopClick = this.handleStartStopClick.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
     this.handleAlarmClick = this.handleAlarmClick.bind(this);
   }
@@ -38,7 +38,7 @@ class App extends React.Component {
     this.setState(newState);
   }
 
-  handleClick() {
+  handleStartStopClick() {
     this.setState({
       enabled: !this.state.enabled,
     });
@@ -47,7 +47,7 @@ class App extends React.Component {
   handleResetClick() {
     this.setState({
       enabled: false,
-      remaining: 5,
+      remaining: this.state.initial,
       alarmed: false,
     });
   }
@@ -55,7 +55,7 @@ class App extends React.Component {
   handleAlarmClick() {
     this.setState({
       alarmed: !this.state.alarmed,
-      remaining: 5,
+      remaining: this.state.initial,
     });
   }
 
@@ -67,21 +67,20 @@ class App extends React.Component {
   }
 
   render() {
-    const { enabled, interval } = this.state;
+    const { enabled, alarmed, initial, remaining } = this.state;
+    const isResetDisabled = remaining === initial;
     return (
       <div className="App">
-        <Counter {...{ enabled, interval }} callback={this.handleInterval} />
+        <Counter {...{ enabled }} callback={this.handleInterval} />
 
-        {this.state.alarmed ? <Alarm /> : <Clock {...this.extractClock()} isHoursHidden />}
+        {alarmed ? <Alarm /> : <Clock {...this.extractClock()} isHoursHidden />}
 
-        {this.state.remaining !== 0 &&
-          <button onClick={this.handleClick}>{!this.state.enabled ? 'Start' : 'Stop'}</button>}
+        {remaining !== 0 &&
+          <button onClick={this.handleStartStopClick}>{!enabled ? 'Start' : 'Stop'}</button>}
 
-        {this.state.alarmed &&
-          this.state.remaining === 0 &&
-          <button onClick={this.handleAlarmClick}>OK</button>}
+        {alarmed && remaining === 0 && <button onClick={this.handleAlarmClick}>OK</button>}
 
-        <button onClick={this.handleResetClick}>Reset</button>
+        <button onClick={this.handleResetClick} disabled={isResetDisabled}>Reset</button>
       </div>
     );
   }
