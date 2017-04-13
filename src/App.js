@@ -3,13 +3,33 @@ import Clock from './components/Clock';
 import Counter from './components/Counter';
 import Alarm from './components/Alarm';
 
+const MODES_DEFAULT = [
+  {
+    id: 'pomodoro',
+    name: 'Pomodoro',
+    initial: 25,
+  },
+  {
+    id: 'break_short',
+    name: 'Short break',
+    initial: 5,
+  },
+  {
+    id: 'break_long',
+    name: 'Long break',
+    initial: 15,
+  },
+];
+
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      initial: 5,
-      remaining: 5,
+      initial: MODES_DEFAULT[0].initial,
+      remaining: MODES_DEFAULT[0].initial,
       enabled: false,
+      modes: MODES_DEFAULT,
+      activeMode: MODES_DEFAULT[0].id,
     };
     this.handleInterval = this.handleInterval.bind(this);
     this.handleStartStopClick = this.handleStartStopClick.bind(this);
@@ -55,6 +75,16 @@ class App extends React.Component {
     });
   }
 
+  handleModeChange(activeMode) {
+    const { initial } = this.state.modes.find(mode => mode.id === activeMode);
+    this.setState({
+      activeMode,
+      initial,
+      remaining: initial,
+      enabled: false,
+    });
+  }
+
   extractClock() {
     return {
       minutes: Math.floor(this.state.remaining % 3600 / 60),
@@ -71,6 +101,21 @@ class App extends React.Component {
         <Counter {...{ enabled }} callback={this.handleInterval} />
 
         {isAlarmed ? <Alarm /> : <Clock {...this.extractClock()} isHoursHidden />}
+
+        <div>
+          {this.state.modes.map(mode => (
+            <label htmlFor={mode.id} key={mode.id}>
+              <input
+                type="radio"
+                id={mode.id}
+                value={mode.id}
+                checked={mode.id === this.state.activeMode}
+                onChange={() => this.handleModeChange(mode.id, event)}
+              />
+              {mode.name}
+            </label>
+          ))}
+        </div>
 
         {remaining !== 0 &&
           <button onClick={this.handleStartStopClick}>{!enabled ? 'Start' : 'Stop'}</button>}
