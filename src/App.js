@@ -40,6 +40,22 @@ class App extends React.Component {
     this.handleAlarmClick = this.handleAlarmClick.bind(this);
   }
 
+  handleHistory(newState) {
+    this.historyId += 1;
+    const historyid = this.historyId;
+    const newStateWithHistory = {
+      ...newState,
+      history: {
+        ...this.state.history,
+        [historyid]: {
+          id: historyid,
+          name: this.state.modes[this.state.activeMode].name,
+        },
+      },
+    };
+    return newStateWithHistory;
+  }
+
   handleInterval() {
     // State object to setState (and render) only once per interval.
     let newState = {};
@@ -54,19 +70,11 @@ class App extends React.Component {
 
     // Trigger alarm and record history on the final interval.
     if (this.state.remaining === 1) {
-      this.historyId += 1;
-      const historyid = this.historyId;
       newState = {
         ...newState,
         enabled: false,
-        history: {
-          ...this.state.history,
-          [historyid]: {
-            id: historyid,
-            name: this.state.modes[this.state.activeMode].name,
-          },
-        },
       };
+      newState = this.handleHistory(newState);
     }
     this.setState(newState);
   }
