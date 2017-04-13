@@ -2,8 +2,14 @@ import React from 'react';
 import Clock from './components/Clock';
 import Counter from './components/Counter';
 import Alarm from './components/Alarm';
+import HistoryList from './components/HistoryList';
 
 const MODES_DEFAULT = [
+  {
+    id: 'testing',
+    name: 'Testing',
+    initial: 2,
+  },
   {
     id: 'pomodoro',
     name: 'Pomodoro',
@@ -30,7 +36,9 @@ class App extends React.Component {
       enabled: false,
       modes: MODES_DEFAULT,
       activeMode: MODES_DEFAULT[0].id,
+      history: [],
     };
+    this.historyId = 0;
     this.handleInterval = this.handleInterval.bind(this);
     this.handleStartStopClick = this.handleStartStopClick.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
@@ -40,17 +48,27 @@ class App extends React.Component {
   handleInterval() {
     // State object to setState (and render) only once per interval.
     let newState = {};
+
+    // Tick the clock.
     if (this.state.enabled) {
       newState = {
         ...newState,
         remaining: this.state.remaining - 1,
       };
     }
-    // Trigger alert on the final interval.
+
+    // Trigger alarm and record history on the final interval.
     if (this.state.remaining === 1) {
       newState = {
         ...newState,
         enabled: false,
+        history: [
+          ...this.state.history,
+          {
+            id: this.historyId += 1,
+            name: this.state.modes.find(mode => mode.id === this.state.activeMode).name,
+          },
+        ],
       };
     }
     this.setState(newState);
@@ -93,7 +111,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { enabled, initial, remaining } = this.state;
+    const { enabled, initial, remaining, history } = this.state;
     const isResetDisabled = remaining === initial;
     const isAlarmed = remaining === 0 && !enabled;
     return (
@@ -123,6 +141,8 @@ class App extends React.Component {
         {isAlarmed && remaining === 0 && <button onClick={this.handleAlarmClick}>OK</button>}
 
         <button onClick={this.handleResetClick} disabled={isResetDisabled}>Reset</button>
+
+        <HistoryList {...{ history }} />
       </div>
     );
   }
