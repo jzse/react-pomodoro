@@ -4,39 +4,34 @@ import Counter from './components/Counter';
 import Alarm from './components/Alarm';
 import HistoryList from './components/HistoryList';
 
-const MODES_DEFAULT = [
-  {
-    id: 'testing',
-    name: 'Testing',
-    initial: 2,
-  },
-  {
+const MODES_DEFAULT = {
+  pomodoro: {
     id: 'pomodoro',
     name: 'Pomodoro',
     initial: 25,
   },
-  {
-    id: 'break_short',
+  breakShort: {
+    id: 'breakShort',
     name: 'Short break',
     initial: 5,
   },
-  {
-    id: 'break_long',
+  breakLong: {
+    id: 'breakLong',
     name: 'Long break',
     initial: 15,
   },
-];
+};
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      initial: MODES_DEFAULT[0].initial,
-      remaining: MODES_DEFAULT[0].initial,
+      initial: MODES_DEFAULT.pomodoro.initial,
+      remaining: MODES_DEFAULT.pomodoro.initial,
       enabled: false,
       modes: MODES_DEFAULT,
-      activeMode: MODES_DEFAULT[0].id,
-      history: [],
+      activeMode: MODES_DEFAULT.pomodoro.id,
+      history: {},
     };
     this.historyId = 0;
     this.handleInterval = this.handleInterval.bind(this);
@@ -59,16 +54,18 @@ class App extends React.Component {
 
     // Trigger alarm and record history on the final interval.
     if (this.state.remaining === 1) {
+      this.historyId += 1;
+      const historyid = this.historyId;
       newState = {
         ...newState,
         enabled: false,
-        history: [
+        history: {
           ...this.state.history,
-          {
-            id: this.historyId += 1,
-            name: this.state.modes.find(mode => mode.id === this.state.activeMode).name,
+          [historyid]: {
+            id: historyid,
+            name: this.state.modes[this.state.activeMode].name,
           },
-        ],
+        },
       };
     }
     this.setState(newState);
@@ -94,7 +91,7 @@ class App extends React.Component {
   }
 
   handleModeChange(activeMode) {
-    const { initial } = this.state.modes.find(mode => mode.id === activeMode);
+    const { initial } = this.state.modes[activeMode];
     this.setState({
       activeMode,
       initial,
@@ -111,7 +108,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { enabled, initial, remaining, history } = this.state;
+    const { enabled, initial, remaining, modes, history } = this.state;
     const isResetDisabled = remaining === initial;
     const isAlarmed = remaining === 0 && !enabled;
     return (
@@ -121,16 +118,16 @@ class App extends React.Component {
         {isAlarmed ? <Alarm /> : <Clock {...this.extractClock()} isHoursHidden />}
 
         <div>
-          {this.state.modes.map(mode => (
-            <label htmlFor={mode.id} key={mode.id}>
+          {Object.values(modes).map(({ id, name }) => (
+            <label htmlFor={id} key={id}>
               <input
                 type="radio"
-                id={mode.id}
-                value={mode.id}
-                checked={mode.id === this.state.activeMode}
-                onChange={() => this.handleModeChange(mode.id, event)}
+                id={id}
+                value={id}
+                checked={id === this.state.activeMode}
+                onChange={() => this.handleModeChange(id, event)}
               />
-              {mode.name}
+              {name}
             </label>
           ))}
         </div>

@@ -4,7 +4,7 @@ function HistoryList(props) {
   const { history } = props;
   return (
     <ol>
-      {history.map(item => <HistoryListItem key={item.id} {...item} />)}
+      {Object.values(history).map(({ id, name }) => <HistoryListItem key={id} {...{ id, name }} />)}
     </ol>
   );
 }
