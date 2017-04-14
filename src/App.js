@@ -4,6 +4,8 @@ import Counter from './components/Counter';
 import Alarm from './components/Alarm';
 import HistoryList from './components/HistoryList';
 
+import toPad from './utils/toPad';
+
 const MODES_DEFAULT = {
   pomodoro: {
     id: 'pomodoro',
@@ -115,7 +117,7 @@ class App extends React.Component {
     });
   }
 
-  extractClock() {
+  extractRemainingTime() {
     return {
       minutes: Math.floor(this.state.remaining % 3600 / 60),
       seconds: Math.floor(this.state.remaining % 3600 % 60),
@@ -126,11 +128,15 @@ class App extends React.Component {
     const { enabled, initial, remaining, modes, history } = this.state;
     const isResetDisabled = remaining === initial;
     const isAlarmed = remaining === 0 && !enabled;
+    const [minutes, seconds] = Object.values(this.extractRemainingTime()).map(
+      num => toPad(num),
+    );
+    document.title = `${minutes}:${seconds} react-pomodoro`;
     return (
       <div className="App">
         <Counter {...{ enabled }} callback={this.handleInterval} />
 
-        {isAlarmed ? <Alarm /> : <Clock {...this.extractClock()} isHoursHidden />}
+        {isAlarmed ? <Alarm /> : <Clock {...this.extractRemainingTime()} isHoursHidden />}
 
         <div>
           {Object.values(modes).map(({ id, name }) => (
