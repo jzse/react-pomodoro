@@ -6,25 +6,8 @@ import Modes from './components/Modes';
 import Controls from './components/Controls';
 import HistoryList from './components/HistoryList';
 
+import MODES_DEFAULT from './constants';
 import toPad from './utils/toPad';
-
-const MODES_DEFAULT = {
-  pomodoro: {
-    id: 'pomodoro',
-    name: 'Pomodoro',
-    initial: 25,
-  },
-  breakShort: {
-    id: 'breakShort',
-    name: 'Short break',
-    initial: 5,
-  },
-  breakLong: {
-    id: 'breakLong',
-    name: 'Long break',
-    initial: 15,
-  },
-};
 
 class App extends React.Component {
   constructor() {
