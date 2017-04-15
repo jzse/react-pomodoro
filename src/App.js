@@ -2,6 +2,7 @@ import React from 'react';
 import Clock from './components/Clock';
 import Counter from './components/Counter';
 import Alarm from './components/Alarm';
+import Modes from './components/Modes';
 import Controls from './components/Controls';
 import HistoryList from './components/HistoryList';
 
@@ -88,15 +89,13 @@ class App extends React.Component {
   }
 
   handleModeChange(activeMode) {
-    return () => {
-      const { initial } = this.state.modes[activeMode];
-      this.setState({
-        activeMode,
-        initial,
-        remaining: initial,
-        enabled: false,
-      });
-    };
+    const { initial } = this.state.modes[activeMode];
+    this.setState({
+      activeMode,
+      initial,
+      remaining: initial,
+      enabled: false,
+    });
   }
 
   handleStatusChange(newStatus) {
@@ -136,31 +135,15 @@ class App extends React.Component {
   }
 
   render() {
-    const { enabled, initial, remaining, modes, history } = this.state;
+    const { enabled, initial, remaining, modes, activeMode, history } = this.state;
     const isAlarmed = remaining === 0 && !enabled;
     const [minutes, seconds] = Object.values(this.extractRemainingTime()).map(num => toPad(num));
     document.title = `${minutes}:${seconds} react-pomodoro`;
     return (
       <div className="App">
         <Counter {...{ enabled }} callback={this.handleInterval} />
-
         {isAlarmed ? <Alarm /> : <Clock {...this.extractRemainingTime()} isHoursHidden />}
-
-        <div>
-          {Object.values(modes).map(({ id, name }) => (
-            <label htmlFor={id} key={id}>
-              <input
-                type="radio"
-                id={id}
-                value={id}
-                checked={id === this.state.activeMode}
-                onChange={this.handleModeChange(id, event)}
-              />
-              {name}
-            </label>
-          ))}
-        </div>
-
+        <Modes {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
         <Controls
           {...{ enabled, initial, remaining, isAlarmed }}
           onStatusChange={this.handleStatusChange}
