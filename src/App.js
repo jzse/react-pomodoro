@@ -37,6 +37,7 @@ class App extends React.Component {
     };
     this.historyId = 0;
     this.handleInterval = this.handleInterval.bind(this);
+    this.handleModeChange = this.handleModeChange.bind(this);
     this.handleStartStopClick = this.handleStartStopClick.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
     this.handleAlarmClick = this.handleAlarmClick.bind(this);
@@ -108,13 +109,15 @@ class App extends React.Component {
   }
 
   handleModeChange(activeMode) {
-    const { initial } = this.state.modes[activeMode];
-    this.setState({
-      activeMode,
-      initial,
-      remaining: initial,
-      enabled: false,
-    });
+    return () => {
+      const { initial } = this.state.modes[activeMode];
+      this.setState({
+        activeMode,
+        initial,
+        remaining: initial,
+        enabled: false,
+      });
+    };
   }
 
   extractRemainingTime() {
@@ -146,7 +149,7 @@ class App extends React.Component {
                 id={id}
                 value={id}
                 checked={id === this.state.activeMode}
-                onChange={() => this.handleModeChange(id, event)}
+                onChange={this.handleModeChange(id, event)}
               />
               {name}
             </label>
