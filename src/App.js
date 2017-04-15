@@ -1,4 +1,5 @@
 import React from 'react';
+import Title from './components/Title';
 import Clock from './components/Clock';
 import Counter from './components/Counter';
 import Alarm from './components/Alarm';
@@ -121,16 +122,22 @@ class App extends React.Component {
     const { enabled, initial, remaining, modes, activeMode, history } = this.state;
     const isAlarmed = remaining === 0 && !enabled;
     const [minutes, seconds] = Object.values(this.extractRemainingTime()).map(num => toPad(num));
-    document.title = `${minutes}:${seconds} react-pomodoro`;
+    const title = `${minutes}:${seconds} react-pomodoro`;
     return (
       <div className="App">
+        <Title {...{ title }} />
+
         <Counter {...{ enabled }} callback={this.handleInterval} />
+
         {isAlarmed ? <Alarm /> : <Clock {...this.extractRemainingTime()} isHoursHidden />}
+
         <Modes {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
+
         <Controls
           {...{ enabled, initial, remaining, isAlarmed }}
           onStatusChange={this.handleStatusChange}
         />
+
         <HistoryList {...{ history }} />
       </div>
     );
