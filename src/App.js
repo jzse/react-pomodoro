@@ -2,6 +2,7 @@ import React from 'react';
 import Clock from './components/Clock';
 import Counter from './components/Counter';
 import Alarm from './components/Alarm';
+import Controls from './components/Controls';
 import HistoryList from './components/HistoryList';
 
 import toPad from './utils/toPad';
@@ -38,9 +39,7 @@ class App extends React.Component {
     this.historyId = 0;
     this.handleInterval = this.handleInterval.bind(this);
     this.handleModeChange = this.handleModeChange.bind(this);
-    this.handleStartStopClick = this.handleStartStopClick.bind(this);
-    this.handleResetClick = this.handleResetClick.bind(this);
-    this.handleAlarmClick = this.handleAlarmClick.bind(this);
+    this.handleStatusChange = this.handleStatusChange.bind(this);
   }
 
   setHistory(newState) {
@@ -88,26 +87,6 @@ class App extends React.Component {
     this.setState(newState);
   }
 
-  handleStartStopClick() {
-    this.setState({
-      enabled: !this.state.enabled,
-    });
-    this.historyStart = new Date();
-  }
-
-  handleResetClick() {
-    this.setState({
-      enabled: false,
-      remaining: this.state.initial,
-    });
-  }
-
-  handleAlarmClick() {
-    this.setState({
-      remaining: this.state.initial,
-    });
-  }
-
   handleModeChange(activeMode) {
     return () => {
       const { initial } = this.state.modes[activeMode];
@@ -120,6 +99,35 @@ class App extends React.Component {
     };
   }
 
+  handleStatusChange(newStatus) {
+    switch (newStatus) {
+      case 'start':
+        this.setState({
+          enabled: true,
+        });
+        this.historyStart = new Date();
+        break;
+      case 'stop':
+        this.setState({
+          enabled: false,
+        });
+        break;
+      case 'reset':
+        this.setState({
+          enabled: false,
+          remaining: this.state.initial,
+        });
+        break;
+      case 'alarm':
+        this.setState({
+          remaining: this.state.initial,
+        });
+        break;
+      default:
+        throw new Error('Unknown status');
+    }
+  }
+
   extractRemainingTime() {
     return {
       minutes: Math.floor(this.state.remaining % 3600 / 60),
@@ -129,11 +137,8 @@ class App extends React.Component {
 
   render() {
     const { enabled, initial, remaining, modes, history } = this.state;
-    const isResetDisabled = remaining === initial;
     const isAlarmed = remaining === 0 && !enabled;
-    const [minutes, seconds] = Object.values(this.extractRemainingTime()).map(
-      num => toPad(num),
-    );
+    const [minutes, seconds] = Object.values(this.extractRemainingTime()).map(num => toPad(num));
     document.title = `${minutes}:${seconds} react-pomodoro`;
     return (
       <div className="App">
@@ -156,13 +161,10 @@ class App extends React.Component {
           ))}
         </div>
 
-        {remaining !== 0 &&
-          <button onClick={this.handleStartStopClick}>{!enabled ? 'Start' : 'Stop'}</button>}
-
-        {isAlarmed && remaining === 0 && <button onClick={this.handleAlarmClick}>OK</button>}
-
-        <button onClick={this.handleResetClick} disabled={isResetDisabled}>Reset</button>
-
+        <Controls
+          {...{ enabled, initial, remaining, isAlarmed }}
+          onStatusChange={this.handleStatusChange}
+        />
         <HistoryList {...{ history }} />
       </div>
     );
