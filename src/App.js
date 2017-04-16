@@ -129,7 +129,7 @@ class App extends React.Component {
 
         <Counter {...{ enabled }} callback={this.handleInterval} />
 
-        {isAlarmed ? <Alarm /> : <Clock {...this.extractRemainingTime()} isHoursHidden />}
+        {isAlarmed ? <Alarm /> : <Clock {...{ minutes, seconds }} isHoursHidden />}
 
         <Modes {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
 
