@@ -1,7 +1,7 @@
 import React from 'react';
 import Title from './components/Title';
 import Clock from './components/Clock';
-import Counter from './components/Counter';
+import Countdown from './components/Countdown';
 import Alarm from './components/Alarm';
 import Modes from './components/Modes';
 import Controls from './components/Controls';
@@ -14,6 +14,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      delay: 1000,
       initial: MODES_DEFAULT.pomodoro.initial,
       remaining: MODES_DEFAULT.pomodoro.initial,
       enabled: false,
@@ -22,7 +23,8 @@ class App extends React.Component {
       history: {},
     };
     this.historyId = 0;
-    this.handleInterval = this.handleInterval.bind(this);
+    this.handleTick = this.handleTick.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
     this.handleModeChange = this.handleModeChange.bind(this);
     this.handleStatusChange = this.handleStatusChange.bind(this);
   }
@@ -49,27 +51,18 @@ class App extends React.Component {
     };
   }
 
-  handleInterval() {
-    // State object to setState (and render) only once per interval.
-    let newState = {};
+  handleTick(remaining) {
+    this.setState({
+      remaining,
+    });
+  }
 
-    // Tick the clock.
-    if (this.state.enabled) {
-      newState = {
-        ...newState,
-        remaining: this.state.remaining - 1,
-      };
-    }
-
-    // Trigger alarm and record history on the final interval.
-    if (this.state.remaining === 1) {
-      newState = {
-        ...newState,
-        enabled: false,
-      };
-      newState = this.setHistory(newState);
-    }
-    this.setState(newState);
+  handleComplete() {
+    this.setState({
+      enabled: false,
+      isAlarmed: true,
+      ...this.setHistory(this.state.history),
+    });
   }
 
   handleModeChange(activeMode) {
@@ -89,6 +82,7 @@ class App extends React.Component {
           enabled: true,
         });
         this.historyStart = new Date();
+        // console.time('elapsed');
         break;
       case 'stop':
         this.setState({
@@ -104,6 +98,7 @@ class App extends React.Component {
       case 'alarm':
         this.setState({
           remaining: this.state.initial,
+          isAlarmed: false,
         });
         break;
       default:
@@ -112,14 +107,15 @@ class App extends React.Component {
   }
 
   extractRemainingTime() {
+    const seconds = this.state.remaining / 1000;
     return {
-      minutes: Math.floor(this.state.remaining % 3600 / 60),
-      seconds: Math.floor(this.state.remaining % 3600 % 60),
+      minutes: Math.floor(seconds / 60),
+      seconds: Math.floor(seconds % 60),
     };
   }
 
   render() {
-    const { enabled, initial, remaining, modes, activeMode, history } = this.state;
+    const { enabled, delay, initial, remaining, modes, activeMode, history } = this.state;
     const isAlarmed = remaining === 0 && !enabled;
     const [minutes, seconds] = Object.values(this.extractRemainingTime()).map(num => toPad(num));
     const title = `${minutes}:${seconds} react-pomodoro`;
@@ -127,7 +123,11 @@ class App extends React.Component {
       <div className="App">
         <Title {...{ title }} />
 
-        <Counter {...{ enabled }} callback={this.handleInterval} />
+        <Countdown
+          {...{ enabled, remaining, delay }}
+          onTick={this.handleTick}
+          onComplete={this.handleComplete}
+        />
 
         {isAlarmed ? <Alarm /> : <Clock {...{ minutes, seconds }} isHoursHidden />}
 
