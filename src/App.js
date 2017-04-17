@@ -40,6 +40,7 @@ class App extends React.Component {
         [historyid]: {
           id: historyid,
           name: this.state.modes[this.state.activeMode].name,
+          initial: this.state.modes[this.state.activeMode].initial,
           start: this.historyStart,
           end: new Date(),
         },
