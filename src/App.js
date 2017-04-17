@@ -6,6 +6,7 @@ import Alarm from './components/Alarm';
 import ModeList from './components/ModeList';
 import Controls from './components/Controls';
 import HistoryList from './components/HistoryList';
+import TimeForm from './components/TimeForm';
 
 import MODES_DEFAULT from './constants';
 import toPad from './utils/toPad';
@@ -28,6 +29,7 @@ class App extends React.Component {
     this.handleComplete = this.handleComplete.bind(this);
     this.handleModeChange = this.handleModeChange.bind(this);
     this.handleStatusChange = this.handleStatusChange.bind(this);
+    this.handleTimeFormChange = this.handleTimeFormChange.bind(this);
   }
 
   setHistory(newState) {
@@ -108,6 +110,14 @@ class App extends React.Component {
     }
   }
 
+  handleTimeFormChange(remaining) {
+    this.setState({
+      initial: remaining,
+      remaining,
+      enabled: false,
+    });
+  }
+
   render() {
     const { enabled, delay, initial, remaining, modes, activeMode, history } = this.state;
     const isAlarmed = remaining === 0 && !enabled;
@@ -125,7 +135,9 @@ class App extends React.Component {
           onComplete={this.handleComplete}
         />
 
-        {isAlarmed ? <Alarm /> : <Clock {...{ minutes, seconds }} onClick={this.handleClockEdit} />}
+        {isAlarmed ? <Alarm /> : <Clock {...{ minutes, seconds }} />}
+
+        <TimeForm {...{ minutes, seconds }} onTimeFormChange={this.handleTimeFormChange} />
 
         <ModeList {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
 
