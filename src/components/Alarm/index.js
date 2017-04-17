@@ -14,7 +14,7 @@ class Alarm extends React.Component {
   }
 
   render() {
-    return <Clock minutes={'00'} seconds={'00'} isHoursHidden />;
+    return <Clock minutes={'00'} seconds={'00'} />;
   }
 }
 

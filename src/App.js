@@ -125,7 +125,7 @@ class App extends React.Component {
           onComplete={this.handleComplete}
         />
 
-        {isAlarmed ? <Alarm /> : <Clock {...{ minutes, seconds }} isHoursHidden />}
+        {isAlarmed ? <Alarm /> : <Clock {...{ minutes, seconds }} onClick={this.handleClockEdit} />}
 
         <ModeList {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
 
