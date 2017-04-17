@@ -19,7 +19,7 @@ class App extends React.Component {
       delay: 1000,
       initial: MODES_DEFAULT.pomodoro.initial,
       remaining: MODES_DEFAULT.pomodoro.initial,
-      enabled: false,
+      isEnabled: false,
       modes: MODES_DEFAULT,
       activeMode: MODES_DEFAULT.pomodoro.id,
       history: {},
@@ -63,7 +63,7 @@ class App extends React.Component {
 
   handleComplete() {
     this.setState({
-      enabled: false,
+      isEnabled: false,
       isAlarmed: true,
       ...this.setHistory(this.state.history),
     });
@@ -75,7 +75,7 @@ class App extends React.Component {
       activeMode,
       initial,
       remaining: initial,
-      enabled: false,
+      isEnabled: false,
     });
   }
 
@@ -83,19 +83,19 @@ class App extends React.Component {
     switch (newStatus) {
       case 'start':
         this.setState({
-          enabled: true,
+          isEnabled: true,
         });
         this.historyStart = new Date();
         // console.time('elapsed');
         break;
       case 'stop':
         this.setState({
-          enabled: false,
+          isEnabled: false,
         });
         break;
       case 'reset':
         this.setState({
-          enabled: false,
+          isEnabled: false,
           remaining: this.state.initial,
         });
         break;
@@ -114,13 +114,13 @@ class App extends React.Component {
     this.setState({
       initial: remaining,
       remaining,
-      enabled: false,
+      isEnabled: false,
     });
   }
 
   render() {
-    const { enabled, delay, initial, remaining, modes, activeMode, history } = this.state;
-    const isAlarmed = remaining === 0 && !enabled;
+    const { isEnabled, delay, initial, remaining, modes, activeMode, history } = this.state;
+    const isAlarmed = remaining === 0 && !isEnabled;
     const [minutes, seconds] = Object.values(extractTime(this.state.remaining)).map(num =>
       toPad(num),
     );
@@ -130,7 +130,7 @@ class App extends React.Component {
         <Title {...{ title }} />
 
         <Countdown
-          {...{ enabled, remaining, delay }}
+          {...{ isEnabled, remaining, delay }}
           onTick={this.handleTick}
           onComplete={this.handleComplete}
         />
@@ -142,7 +142,7 @@ class App extends React.Component {
         <ModeList {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
 
         <Controls
-          {...{ enabled, initial, remaining, isAlarmed }}
+          {...{ isEnabled, initial, remaining, isAlarmed }}
           onStatusChange={this.handleStatusChange}
         />
 
