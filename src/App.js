@@ -97,9 +97,10 @@ class App extends React.Component {
         this.setState({
           isEnabled: false,
           remaining: this.state.initial,
+          isAlarmed: false,
         });
         break;
-      case 'alarm':
+      case 'cancelAlarm':
         this.setState({
           remaining: this.state.initial,
           isAlarmed: false,
@@ -119,8 +120,16 @@ class App extends React.Component {
   }
 
   render() {
-    const { isEnabled, delay, initial, remaining, modes, activeMode, history } = this.state;
-    const isAlarmed = remaining === 0 && !isEnabled;
+    const {
+      isEnabled,
+      isAlarmed,
+      delay,
+      initial,
+      remaining,
+      modes,
+      activeMode,
+      history,
+    } = this.state;
     const [minutes, seconds] = Object.values(extractTime(this.state.remaining)).map(num =>
       toPad(num),
     );
