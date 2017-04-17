@@ -24,6 +24,7 @@ class App extends React.Component {
       activeMode: MODES_DEFAULT.pomodoro.id,
       history: {},
     };
+
     this.historyId = 0;
     this.handleTick = this.handleTick.bind(this);
     this.handleComplete = this.handleComplete.bind(this);
@@ -32,27 +33,20 @@ class App extends React.Component {
     this.handleTimeFormChange = this.handleTimeFormChange.bind(this);
   }
 
-  setHistory(newState) {
+  addHistory(existingHistory) {
     this.historyId += 1;
-    const historyid = this.historyId;
-
-    const history = {
-      history: {
-        ...this.state.history,
-        [historyid]: {
-          id: historyid,
-          name: this.state.modes[this.state.activeMode].name,
-          initial: this.state.modes[this.state.activeMode].initial,
-          start: this.historyStart,
-          end: new Date(),
-        },
+    const historyId = this.historyId;
+    const mergedHistory = {
+      ...existingHistory,
+      [historyId]: {
+        id: historyId,
+        name: this.state.modes[this.state.activeMode].name,
+        initial: this.state.modes[this.state.activeMode].initial,
+        start: this.historyStart,
+        end: new Date(),
       },
     };
-
-    return {
-      ...newState,
-      ...history,
-    };
+    return mergedHistory;
   }
 
   handleTick(remaining) {
@@ -65,7 +59,9 @@ class App extends React.Component {
     this.setState({
       isEnabled: false,
       isAlarmed: true,
-      ...this.setHistory(this.state.history),
+      history: {
+        ...this.addHistory(this.state.history),
+      },
     });
   }
 
