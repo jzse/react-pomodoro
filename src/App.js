@@ -3,7 +3,7 @@ import Title from './components/Title';
 import Clock from './components/Clock';
 import Countdown from './components/Countdown';
 import Alarm from './components/Alarm';
-import Modes from './components/Modes';
+import ModeList from './components/ModeList';
 import Controls from './components/Controls';
 import HistoryList from './components/HistoryList';
 
@@ -126,7 +126,7 @@ class App extends React.Component {
 
         {isAlarmed ? <Alarm /> : <Clock {...{ minutes, seconds }} isHoursHidden />}
 
-        <Modes {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
+        <ModeList {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
 
         <Controls
           {...{ enabled, initial, remaining, isAlarmed }}
