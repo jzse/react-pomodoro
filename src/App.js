@@ -9,6 +9,7 @@ import HistoryList from './components/HistoryList';
 
 import MODES_DEFAULT from './constants';
 import toPad from './utils/toPad';
+import extractTime from './utils/extractTime';
 
 class App extends React.Component {
   constructor() {
@@ -106,18 +107,12 @@ class App extends React.Component {
     }
   }
 
-  extractRemainingTime() {
-    const seconds = this.state.remaining / 1000;
-    return {
-      minutes: Math.floor(seconds / 60),
-      seconds: Math.floor(seconds % 60),
-    };
-  }
-
   render() {
     const { enabled, delay, initial, remaining, modes, activeMode, history } = this.state;
     const isAlarmed = remaining === 0 && !enabled;
-    const [minutes, seconds] = Object.values(this.extractRemainingTime()).map(num => toPad(num));
+    const [minutes, seconds] = Object.values(extractTime(this.state.remaining)).map(num =>
+      toPad(num),
+    );
     const title = `${minutes}:${seconds} react-pomodoro`;
     return (
       <div className="App">
