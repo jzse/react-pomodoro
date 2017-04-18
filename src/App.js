@@ -108,11 +108,21 @@ class App extends React.Component {
     }
   }
 
-  handleTimeFormChange(remaining) {
+  handleTimeFormChange(newRemaining) {
+    const activeMode = this.state.activeMode;
+    const updatedModes = {
+      ...this.state.modes,
+      [activeMode]: {
+        id: activeMode,
+        name: this.state.modes[activeMode].name,
+        initial: newRemaining,
+      },
+    };
     this.setState({
-      initial: remaining,
-      remaining,
+      initial: newRemaining,
+      remaining: newRemaining,
       isEnabled: false,
+      modes: updatedModes,
     });
   }
 
