@@ -5,16 +5,17 @@ class Controls extends React.Component {
     return () => this.props.onStatusChange(newStatus);
   }
   render() {
-    const { enabled, initial, remaining, isAlarmed } = this.props;
-    const isResetDisabled = remaining === initial;
+    const { isEnabled, initial, remaining, isAlarmed } = this.props;
     return (
       <div>
-        {!enabled && remaining !== 0 && <button onClick={this.callback('start')}>Start</button>}
-        {enabled && <button onClick={this.callback('stop')}>Stop</button>}
+        {!isEnabled &&
+          remaining === initial &&
+          <button onClick={this.callback('start')} disabled={initial === 0}>Start</button>}
+        {isEnabled && <button onClick={this.callback('stop')}>Stop</button>}
 
-        {isAlarmed && remaining === 0 && <button onClick={this.callback('alarm')}>OK</button>}
+        {isAlarmed && remaining === 0 && <button onClick={this.callback('cancelAlarm')}>OK</button>}
 
-        <button onClick={this.callback('reset')} disabled={isResetDisabled}>
+        <button onClick={this.callback('reset')} disabled={remaining === initial}>
           Reset
         </button>
       </div>
