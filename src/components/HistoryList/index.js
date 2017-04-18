@@ -1,8 +1,7 @@
 import React from 'react';
-import extractTime from '../../utils/extractTime';
-import toPad from '../../utils/toPad';
 
-function HistoryList({ history }) {
+function HistoryList(props) {
+  const { history } = props;
   return (
     <ol reversed>
       {Object.values(history).reverse().map(item => <HistoryListItem key={item.id} {...item} />)}
@@ -10,18 +9,15 @@ function HistoryList({ history }) {
   );
 }
 
-function HistoryListItem({ name, initial, end }) {
-  const [minutes, seconds] = Object.values(extractTime(initial)).map(num =>
-    toPad(num),
-  );
-  const formatInitial = `${minutes}:${seconds}`;
+function HistoryListItem(props) {
+  const { name, end } = props;
   return (
     <li>
       <strong>{name}</strong>
       <div>
         {' '}
         <small>
-          {end.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' })} [{formatInitial}]
+          {end.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' })}
         </small>
       </div>
     </li>

@@ -13,14 +13,14 @@ class Countdown extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.isEnabled) {
+    if (this.props.enabled) {
       this.start();
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.isEnabled !== nextProps.isEnabled) {
-      if (nextProps.isEnabled) {
+    if (this.props.enabled !== nextProps.enabled) {
+      if (nextProps.enabled) {
         this.start();
       } else {
         this.stop();
@@ -71,7 +71,7 @@ class Countdown extends React.Component {
 }
 
 Countdown.propTypes = {
-  isEnabled: PropTypes.bool.isRequired,
+  enabled: PropTypes.bool.isRequired,
   remaining: PropTypes.number.isRequired,
   delay: PropTypes.number.isRequired,
   onTick: PropTypes.func.isRequired,
