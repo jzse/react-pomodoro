@@ -1,9 +1,8 @@
 import React from 'react';
 
-function Clock({ isHoursHidden, hours, minutes, seconds }) {
+function Clock({ minutes, seconds }) {
   return (
     <h1 className="Clock">
-      {!isHoursHidden ? `${hours}:` : ''}
       {minutes}:
       {seconds}
     </h1>

@@ -3,12 +3,14 @@ import Title from './components/Title';
 import Clock from './components/Clock';
 import Countdown from './components/Countdown';
 import Alarm from './components/Alarm';
-import Modes from './components/Modes';
+import ModeList from './components/ModeList';
 import Controls from './components/Controls';
 import HistoryList from './components/HistoryList';
+import TimeForm from './components/TimeForm';
 
 import MODES_DEFAULT from './constants';
 import toPad from './utils/toPad';
+import extractTime from './utils/extractTime';
 
 class App extends React.Component {
   constructor() {
@@ -17,38 +19,34 @@ class App extends React.Component {
       delay: 1000,
       initial: MODES_DEFAULT.pomodoro.initial,
       remaining: MODES_DEFAULT.pomodoro.initial,
-      enabled: false,
+      isEnabled: false,
       modes: MODES_DEFAULT,
       activeMode: MODES_DEFAULT.pomodoro.id,
       history: {},
     };
+
     this.historyId = 0;
     this.handleTick = this.handleTick.bind(this);
     this.handleComplete = this.handleComplete.bind(this);
     this.handleModeChange = this.handleModeChange.bind(this);
     this.handleStatusChange = this.handleStatusChange.bind(this);
+    this.handleTimeFormChange = this.handleTimeFormChange.bind(this);
   }
 
-  setHistory(newState) {
+  addHistory(existingHistory) {
     this.historyId += 1;
-    const historyid = this.historyId;
-
-    const history = {
-      history: {
-        ...this.state.history,
-        [historyid]: {
-          id: historyid,
-          name: this.state.modes[this.state.activeMode].name,
-          start: this.historyStart,
-          end: new Date(),
-        },
+    const historyId = this.historyId;
+    const mergedHistory = {
+      ...existingHistory,
+      [historyId]: {
+        id: historyId,
+        name: this.state.modes[this.state.activeMode].name,
+        initial: this.state.modes[this.state.activeMode].initial,
+        start: this.historyStart,
+        end: new Date(),
       },
     };
-
-    return {
-      ...newState,
-      ...history,
-    };
+    return mergedHistory;
   }
 
   handleTick(remaining) {
@@ -59,9 +57,11 @@ class App extends React.Component {
 
   handleComplete() {
     this.setState({
-      enabled: false,
+      isEnabled: false,
       isAlarmed: true,
-      ...this.setHistory(this.state.history),
+      history: {
+        ...this.addHistory(this.state.history),
+      },
     });
   }
 
@@ -71,7 +71,8 @@ class App extends React.Component {
       activeMode,
       initial,
       remaining: initial,
-      enabled: false,
+      isEnabled: false,
+      isAlarmed: false,
     });
   }
 
@@ -79,23 +80,24 @@ class App extends React.Component {
     switch (newStatus) {
       case 'start':
         this.setState({
-          enabled: true,
+          isEnabled: true,
         });
         this.historyStart = new Date();
         // console.time('elapsed');
         break;
       case 'stop':
         this.setState({
-          enabled: false,
+          isEnabled: false,
         });
         break;
       case 'reset':
         this.setState({
-          enabled: false,
+          isEnabled: false,
           remaining: this.state.initial,
+          isAlarmed: false,
         });
         break;
-      case 'alarm':
+      case 'cancelAlarm':
         this.setState({
           remaining: this.state.initial,
           isAlarmed: false,
@@ -106,35 +108,58 @@ class App extends React.Component {
     }
   }
 
-  extractRemainingTime() {
-    const seconds = this.state.remaining / 1000;
-    return {
-      minutes: Math.floor(seconds / 60),
-      seconds: Math.floor(seconds % 60),
+  handleTimeFormChange(newRemaining) {
+    const activeMode = this.state.activeMode;
+    const updatedModes = {
+      ...this.state.modes,
+      [activeMode]: {
+        id: activeMode,
+        name: this.state.modes[activeMode].name,
+        initial: newRemaining,
+      },
     };
+    this.setState({
+      initial: newRemaining,
+      remaining: newRemaining,
+      isEnabled: false,
+      isAlarmed: false,
+      modes: updatedModes,
+    });
   }
 
   render() {
-    const { enabled, delay, initial, remaining, modes, activeMode, history } = this.state;
-    const isAlarmed = remaining === 0 && !enabled;
-    const [minutes, seconds] = Object.values(this.extractRemainingTime()).map(num => toPad(num));
+    const {
+      isEnabled,
+      isAlarmed,
+      delay,
+      initial,
+      remaining,
+      modes,
+      activeMode,
+      history,
+    } = this.state;
+    const [minutes, seconds] = Object.values(extractTime(this.state.remaining)).map(num =>
+      toPad(num),
+    );
     const title = `${minutes}:${seconds} react-pomodoro`;
     return (
       <div className="App">
         <Title {...{ title }} />
 
         <Countdown
-          {...{ enabled, remaining, delay }}
+          {...{ isEnabled, remaining, delay }}
           onTick={this.handleTick}
           onComplete={this.handleComplete}
         />
 
-        {isAlarmed ? <Alarm /> : <Clock {...{ minutes, seconds }} isHoursHidden />}
+        {isAlarmed ? <Alarm /> : <Clock {...{ minutes, seconds }} />}
 
-        <Modes {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
+        <TimeForm {...{ minutes, seconds }} onTimeFormChange={this.handleTimeFormChange} />
+
+        <ModeList {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
 
         <Controls
-          {...{ enabled, initial, remaining, isAlarmed }}
+          {...{ isEnabled, initial, remaining, isAlarmed }}
           onStatusChange={this.handleStatusChange}
         />
 
