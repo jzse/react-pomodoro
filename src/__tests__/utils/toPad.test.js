@@ -5,6 +5,6 @@ describe('toPad', () => {
     expect(toPad(9)).toBe('09');
   });
   it('should not pad numbers greater than 10', () => {
-    expect(toPad(11)).toBe('11');
+    expect(toPad(11)).toBe(11);
   });
 });
