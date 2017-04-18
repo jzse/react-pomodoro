@@ -122,6 +122,7 @@ class App extends React.Component {
       initial: newRemaining,
       remaining: newRemaining,
       isEnabled: false,
+      isAlarmed: false,
       modes: updatedModes,
     });
   }

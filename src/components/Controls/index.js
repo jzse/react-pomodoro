@@ -9,7 +9,7 @@ class Controls extends React.Component {
     return (
       <div>
         {!isEnabled &&
-          remaining !== 0 &&
+          remaining === initial &&
           <button onClick={this.callback('start')} disabled={initial === 0}>Start</button>}
         {isEnabled && <button onClick={this.callback('stop')}>Stop</button>}
 
