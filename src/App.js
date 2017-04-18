@@ -72,6 +72,7 @@ class App extends React.Component {
       initial,
       remaining: initial,
       isEnabled: false,
+      isAlarmed: false,
     });
   }
 
