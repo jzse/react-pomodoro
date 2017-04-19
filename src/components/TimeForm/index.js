@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 class TimeForm extends React.Component {
   constructor(props) {
     super(props);
+    this.patternPositiveInt = '^\\d+$';
+    this.regexPositiveInt = new RegExp(this.patternPositiveInt);
+
     this.handleFormChange = this.handleFormChange.bind(this);
   }
 
   handleFormChange(event) {
-    // - positive integers only
-    // - max value 59
-    const value = event.target.value.match(/^\d+$/) && event.target.value < 60
+    const value = event.target.value.match(this.regexPositiveInt) && event.target.value < 60
       ? event.target.value
       : 0;
     const merged = {
@@ -32,7 +33,7 @@ class TimeForm extends React.Component {
             <label className="visuallyhidden" htmlFor={item}>
               {item}
             </label>
-            <input type="text" id={item} name={item} value={this.props[item]} />
+            <input type="tel" id={item} name={item} value={this.props[item]} />
           </div>
         ))}
       </div>
