@@ -1,20 +1,24 @@
 import React from 'react';
-import Clock from '../Clock';
 
 class Alarm extends React.Component {
-  componentDidMount() {
+  componentWillMount() {
     this.audio = new Audio('alarm.mp3');
     this.audio.loop = true;
     this.audio.volume = 0.2;
-    this.audio.play();
-    // console.timeEnd('elapsed');
   }
+
   componentWillUnmount() {
     this.audio.pause();
+    this.audio = null;
   }
 
   render() {
-    return <Clock minutes={'00'} seconds={'00'} />;
+    if (this.audio && !this.props.isAlarmed) {
+      this.audio.pause();
+      return false;
+    }
+    this.audio.play();
+    return false;
   }
 }
 

@@ -20,6 +20,7 @@ class App extends React.Component {
       initial: MODES_DEFAULT.pomodoro.initial,
       remaining: MODES_DEFAULT.pomodoro.initial,
       isEnabled: false,
+      isAlarmed: false,
       modes: MODES_DEFAULT,
       activeMode: MODES_DEFAULT.pomodoro.id,
       history: {},
@@ -152,7 +153,8 @@ class App extends React.Component {
           onComplete={this.handleComplete}
         />
 
-        {isAlarmed ? <Alarm /> : <Clock {...{ minutes, seconds }} />}
+        <Alarm {...{ isAlarmed }} />
+        <Clock {...{ minutes, seconds }} />
 
         <TimeForm {...{ minutes, seconds }} onTimeFormChange={this.handleTimeFormChange} />
 
