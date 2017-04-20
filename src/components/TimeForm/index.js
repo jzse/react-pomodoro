@@ -27,7 +27,7 @@ class TimeForm extends React.Component {
   render() {
     const { minutes, seconds } = this.props;
     return (
-      <div className="TimeForm" onChange={this.handleFormChange}>
+      <div onChange={this.handleFormChange}>
         {Object.keys({ minutes, seconds }).map(item => (
           <div key={item}>
             <label className="visuallyhidden" htmlFor={item}>

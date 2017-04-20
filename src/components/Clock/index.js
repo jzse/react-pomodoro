@@ -2,10 +2,10 @@ import React from 'react';
 
 function Clock({ minutes, seconds }) {
   return (
-    <h1 className="Clock">
+    <div>
       {minutes}:
       {seconds}
-    </h1>
+    </div>
   );
 }
 

@@ -144,7 +144,7 @@ class App extends React.Component {
     );
     const title = `${minutes}:${seconds} react-pomodoro`;
     return (
-      <div className="App">
+      <div>
         <Title {...{ title }} />
 
         <Countdown
