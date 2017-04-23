@@ -4,7 +4,13 @@ class Alarm extends React.Component {
   componentWillMount() {
     this.audio = new Audio('alarm.mp3');
     this.audio.loop = true;
-    this.audio.volume = 0.2;
+    this.audio.volume = this.props.volume;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.audio) {
+      this.audio.volume = nextProps.volume;
+    }
   }
 
   componentWillUnmount() {

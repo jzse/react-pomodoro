@@ -21,6 +21,7 @@ class App extends React.Component {
       remaining: MODES_DEFAULT.pomodoro.initial,
       isEnabled: false,
       isAlarmed: false,
+      volume: 0.5,
       modes: MODES_DEFAULT,
       activeMode: MODES_DEFAULT.pomodoro.id,
       history: {},
@@ -32,6 +33,7 @@ class App extends React.Component {
     this.handleModeChange = this.handleModeChange.bind(this);
     this.handleStatusChange = this.handleStatusChange.bind(this);
     this.handleTimeFormChange = this.handleTimeFormChange.bind(this);
+    this.handleVolumeChange = this.handleVolumeChange.bind(this);
   }
 
   addHistory(existingHistory) {
@@ -128,10 +130,17 @@ class App extends React.Component {
     });
   }
 
+  handleVolumeChange(event) {
+    this.setState({
+      volume: event.target.value,
+    });
+  }
+
   render() {
     const {
       isEnabled,
       isAlarmed,
+      volume,
       delay,
       initial,
       remaining,
@@ -153,7 +162,7 @@ class App extends React.Component {
           onComplete={this.handleComplete}
         />
 
-        <Alarm {...{ isAlarmed }} />
+        <Alarm {...{ isAlarmed, volume }} />
         <Clock {...{ minutes, seconds }} />
 
         {/* <TimeForm {...{ minutes, seconds }} onTimeFormChange={this.handleTimeFormChange} /> */}
@@ -164,6 +173,16 @@ class App extends React.Component {
           {...{ isEnabled, initial, remaining, isAlarmed }}
           onStatusChange={this.handleStatusChange}
         />
+
+        <input
+          type="range"
+          min="0"
+          max="1"
+          value={this.state.volume}
+          step="0.1"
+          onChange={this.handleVolumeChange}
+        />
+        <span>{this.state.volume * 100}%</span>
 
         <HistoryList {...{ history }} />
       </div>
