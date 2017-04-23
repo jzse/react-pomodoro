@@ -6,7 +6,7 @@ import Alarm from './components/Alarm';
 import ModeList from './components/ModeList';
 import Controls from './components/Controls';
 import HistoryList from './components/HistoryList';
-import TimeForm from './components/TimeForm';
+// import TimeForm from './components/TimeForm';
 
 import MODES_DEFAULT from './constants';
 import toPad from './utils/toPad';
@@ -156,7 +156,7 @@ class App extends React.Component {
         <Alarm {...{ isAlarmed }} />
         <Clock {...{ minutes, seconds }} />
 
-        <TimeForm {...{ minutes, seconds }} onTimeFormChange={this.handleTimeFormChange} />
+        {/* <TimeForm {...{ minutes, seconds }} onTimeFormChange={this.handleTimeFormChange} /> */}
 
         <ModeList {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
 
