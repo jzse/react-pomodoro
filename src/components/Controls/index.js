@@ -7,16 +7,16 @@ class Controls extends React.Component {
   render() {
     const { isEnabled, initial, remaining, isAlarmed } = this.props;
     return (
-      <div>
+      <div className="Controls">
         {!isEnabled &&
           remaining <= initial &&
           !isAlarmed &&
-          <button onClick={this.callback('start')} disabled={initial === 0}>Start</button>}
-        {isEnabled && <button onClick={this.callback('stop')}>Stop</button>}
+          <button onClick={this.callback('start')} disabled={initial === 0} className="Controls__Button Controls__Start">Start</button>}
+        {isEnabled && <button onClick={this.callback('stop')} className="Controls__Button Controls__Stop">Stop</button>}
 
-        {isAlarmed && remaining === 0 && <button onClick={this.callback('cancelAlarm')}>OK</button>}
+        {isAlarmed && remaining === 0 && <button onClick={this.callback('cancelAlarm')} className="Controls__Button Controls__Ok">OK</button>}
 
-        <button onClick={this.callback('reset')} disabled={remaining === initial}>
+        <button onClick={this.callback('reset')} disabled={remaining === initial} className="Controls__Button Controls__Reset">
           Reset
         </button>
       </div>

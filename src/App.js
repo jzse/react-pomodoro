@@ -153,38 +153,43 @@ class App extends React.Component {
     );
     const title = `${minutes}:${seconds} react-pomodoro`;
     return (
-      <div>
-        <Title {...{ title }} />
+      <div className="App">
+        <div className="Pomodoro">
+          <Title {...{ title }} />
 
-        <Countdown
-          {...{ isEnabled, remaining, delay }}
-          onTick={this.handleTick}
-          onComplete={this.handleComplete}
-        />
+          <Countdown
+            {...{ isEnabled, remaining, delay }}
+            onTick={this.handleTick}
+            onComplete={this.handleComplete}
+          />
 
-        <Alarm {...{ isAlarmed, volume }} />
-        <Clock {...{ minutes, seconds }} />
+          <Alarm {...{ isAlarmed, volume }} />
+          <Clock {...{ minutes, seconds }} />
 
-        {/* <TimeForm {...{ minutes, seconds }} onTimeFormChange={this.handleTimeFormChange} /> */}
+          {/* <TimeForm
+            {...{ minutes, seconds }}
+            onTimeFormChange={this.handleTimeFormChange}
+          /> */}
 
-        <ModeList {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
+          <ModeList {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
 
-        <Controls
-          {...{ isEnabled, initial, remaining, isAlarmed }}
-          onStatusChange={this.handleStatusChange}
-        />
+          <Controls
+            {...{ isEnabled, initial, remaining, isAlarmed }}
+            onStatusChange={this.handleStatusChange}
+          />
 
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={this.state.volume}
-          step="0.1"
-          onChange={this.handleVolumeChange}
-        />
-        <span>{this.state.volume * 100}%</span>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            value={this.state.volume}
+            step="0.1"
+            onChange={this.handleVolumeChange}
+          />
+          <span>{this.state.volume * 100}%</span>
 
-        <HistoryList {...{ history }} />
+          <HistoryList {...{ history }} />
+        </div>
       </div>
     );
   }

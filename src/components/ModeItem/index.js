@@ -9,8 +9,8 @@ class ModeItem extends React.Component {
   render() {
     const { mode, activeMode } = this.props;
     const classes = [
-      'btn',
-      (mode.id === activeMode ? 'btn--isActive' : ''),
+      'ModeItem',
+      (mode.id === activeMode ? 'ModeItem--isActive' : ''),
     ];
     return (
       <button className={classes.join(' ')} onClick={this.callback(mode.id)}>
