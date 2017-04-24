@@ -2,17 +2,17 @@ const MODES_DEFAULT = {
   pomodoro: {
     id: 'pomodoro',
     name: 'Pomodoro',
-    initial: 1500000,
+    initial: 15000,
   },
   breakShort: {
     id: 'breakShort',
-    name: 'Short break',
-    initial: 300000,
+    name: 'Short',
+    initial: 3000,
   },
   breakLong: {
     id: 'breakLong',
-    name: 'Long break',
-    initial: 900000,
+    name: 'Long',
+    initial: 9000,
   },
 };
 
