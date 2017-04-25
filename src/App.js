@@ -16,7 +16,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      delay: 1000,
+      delay: 500,
       initial: MODES_DEFAULT.pomodoro.initial,
       remaining: MODES_DEFAULT.pomodoro.initial,
       isEnabled: false,
@@ -25,6 +25,7 @@ class App extends React.Component {
       modes: MODES_DEFAULT,
       activeMode: MODES_DEFAULT.pomodoro.id,
       history: {},
+      clockFlash: true,
     };
 
     this.historyId = 0;
@@ -54,6 +55,7 @@ class App extends React.Component {
 
   handleTick(remaining) {
     this.setState({
+      clockFlash: !this.state.clockFlash,
       remaining,
     });
   }
@@ -147,6 +149,7 @@ class App extends React.Component {
       modes,
       activeMode,
       history,
+      clockFlash,
     } = this.state;
     const [minutes, seconds] = Object.values(extractTime(this.state.remaining)).map(num =>
       toPad(num),
@@ -164,7 +167,7 @@ class App extends React.Component {
           />
 
           <Alarm {...{ isAlarmed, volume }} />
-          <Clock {...{ minutes, seconds }} />
+          <Clock {...{ minutes, seconds, clockFlash }} />
 
           {/* <TimeForm
             {...{ minutes, seconds }}
