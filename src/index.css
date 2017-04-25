@@ -54,6 +54,14 @@ button[disabled] {
   text-align: center;
 }
 
+.Clock__flash {
+  color: #FFF;
+}
+
+.Clock__flash--isFlash {
+  color: #000;
+}
+
 .ModeList {
   display: flex;
   background: #000;
