@@ -29,6 +29,7 @@ class Alarm extends React.Component {
 
   render() {
     if (this.props.isAlarmed) {
+      // console.timeEnd('elapsed');
       this.audio.play();
     }
     return false;

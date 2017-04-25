@@ -2,10 +2,11 @@ function extractTime(milliseconds) {
   if (milliseconds > 3600000) {
     throw new Error('Milliseconds outside of bounds.');
   }
-  const seconds = milliseconds / 1000;
+  const time = new Date(milliseconds);
   return {
-    minutes: Math.floor(seconds / 60),
-    seconds: Math.floor(seconds % 60),
+    minutes: time.getMinutes(),
+    seconds: time.getSeconds(),
+    millseconds: time.getMilliseconds(),
   };
 }
 export default extractTime;

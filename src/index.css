@@ -58,10 +58,6 @@ button[disabled] {
   color: #FFF;
 }
 
-.Clock__separator--isFlash {
-  color: #000;
-}
-
 .ModeList {
   display: flex;
   background: #000;
