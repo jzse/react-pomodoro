@@ -11,6 +11,15 @@ class Alarm extends React.Component {
     if (this.audio) {
       this.audio.volume = nextProps.volume;
     }
+    // Restart the audio when the alarm is triggered again.
+    if (this.props.isAlarmed && !nextProps.isAlarmed) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+    }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return (nextProps.isAlarmed !== this.props.isAlarmed);
   }
 
   componentWillUnmount() {
@@ -19,11 +28,9 @@ class Alarm extends React.Component {
   }
 
   render() {
-    if (this.audio && !this.props.isAlarmed) {
-      this.audio.pause();
-      return false;
+    if (this.props.isAlarmed) {
+      this.audio.play();
     }
-    this.audio.play();
     return false;
   }
 }
