@@ -21,7 +21,7 @@ class App extends React.Component {
       remaining: MODES_DEFAULT.pomodoro.initial,
       isEnabled: false,
       isAlarmed: false,
-      volume: 0.5,
+      volume: 0.2,
       modes: MODES_DEFAULT,
       activeMode: MODES_DEFAULT.pomodoro.id,
       history: {},
@@ -32,8 +32,8 @@ class App extends React.Component {
     this.handleComplete = this.handleComplete.bind(this);
     this.handleModeChange = this.handleModeChange.bind(this);
     this.handleStatusChange = this.handleStatusChange.bind(this);
-    this.handleTimeFormChange = this.handleTimeFormChange.bind(this);
-    this.handleVolumeChange = this.handleVolumeChange.bind(this);
+    // this.handleTimeFormChange = this.handleTimeFormChange.bind(this);
+    // this.handleVolumeChange = this.handleVolumeChange.bind(this);/
   }
 
   addHistory(existingHistory) {
@@ -111,30 +111,30 @@ class App extends React.Component {
     }
   }
 
-  handleTimeFormChange(newRemaining) {
-    const activeMode = this.state.activeMode;
-    const updatedModes = {
-      ...this.state.modes,
-      [activeMode]: {
-        id: activeMode,
-        name: this.state.modes[activeMode].name,
-        initial: newRemaining,
-      },
-    };
-    this.setState({
-      initial: newRemaining,
-      remaining: newRemaining,
-      isEnabled: false,
-      isAlarmed: false,
-      modes: updatedModes,
-    });
-  }
+  // handleTimeFormChange(newRemaining) {
+  //   const activeMode = this.state.activeMode;
+  //   const updatedModes = {
+  //     ...this.state.modes,
+  //     [activeMode]: {
+  //       id: activeMode,
+  //       name: this.state.modes[activeMode].name,
+  //       initial: newRemaining,
+  //     },
+  //   };
+  //   this.setState({
+  //     initial: newRemaining,
+  //     remaining: newRemaining,
+  //     isEnabled: false,
+  //     isAlarmed: false,
+  //     modes: updatedModes,
+  //   });
+  // }
 
-  handleVolumeChange(event) {
-    this.setState({
-      volume: event.target.value,
-    });
-  }
+  // handleVolumeChange(event) {
+  //   this.setState({
+  //     volume: event.target.value,
+  //   });
+  // }
 
   render() {
     const {
@@ -177,16 +177,6 @@ class App extends React.Component {
             {...{ isEnabled, initial, remaining, isAlarmed }}
             onStatusChange={this.handleStatusChange}
           />
-
-          <input
-            type="range"
-            min="0"
-            max="1"
-            value={this.state.volume}
-            step="0.1"
-            onChange={this.handleVolumeChange}
-          />
-          <span>{this.state.volume * 100}%</span>
 
           <HistoryList {...{ history }} />
         </div>
