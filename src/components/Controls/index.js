@@ -11,12 +11,29 @@ class Controls extends React.Component {
         {!isEnabled &&
           remaining <= initial &&
           !isAlarmed &&
-          <button onClick={this.callback('start')} disabled={initial === 0} className="Controls__Button Controls__Start">Start</button>}
-        {isEnabled && <button onClick={this.callback('stop')} className="Controls__Button Controls__Stop">Stop</button>}
+          <button
+            onClick={this.callback('start')}
+            disabled={initial === 0}
+            className="Controls__Button Controls__Start"
+          >
+            Start
+          </button>}
+        {isEnabled &&
+          <button onClick={this.callback('stop')} className="Controls__Button Controls__Stop">
+            Stop
+          </button>}
 
-        {isAlarmed && remaining === 0 && <button onClick={this.callback('cancelAlarm')} className="Controls__Button Controls__Ok">OK</button>}
+        {isAlarmed &&
+          remaining === 0 &&
+          <button onClick={this.callback('cancelAlarm')} className="Controls__Button Controls__Ok">
+            OK
+          </button>}
 
-        <button onClick={this.callback('reset')} disabled={remaining === initial} className="Controls__Button Controls__Reset">
+        <button
+          onClick={this.callback('reset')}
+          disabled={remaining === initial}
+          className="Controls__Button Controls__Reset"
+        >
           Reset
         </button>
       </div>
