@@ -164,7 +164,7 @@ class App extends React.Component {
           />
 
           <Alarm {...{ isAlarmed, volume }} />
-          <Clock {...{ minutes, seconds, remaining }} />
+          <Clock {...{ minutes, seconds, remaining, delay }} />
 
           {/* <TimeForm
             {...{ minutes, seconds }}
