@@ -16,7 +16,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      delay: 500,
+      delay: 1000,
       initial: MODES_DEFAULT.pomodoro.initial,
       remaining: MODES_DEFAULT.pomodoro.initial,
       isEnabled: false,
@@ -33,7 +33,7 @@ class App extends React.Component {
     this.handleModeChange = this.handleModeChange.bind(this);
     this.handleStatusChange = this.handleStatusChange.bind(this);
     // this.handleTimeFormChange = this.handleTimeFormChange.bind(this);
-    // this.handleVolumeChange = this.handleVolumeChange.bind(this);/
+    // this.handleVolumeChange = this.handleVolumeChange.bind(this);
   }
 
   addHistory(existingHistory) {

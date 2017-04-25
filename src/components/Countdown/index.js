@@ -49,7 +49,7 @@ class Countdown extends React.Component {
   tick() {
     this.callbackTick();
 
-    if (this.props.remaining < this.props.delay) {
+    if (this.props.remaining === 0) {
       this.callbackComplete();
     }
   }
