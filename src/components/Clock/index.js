@@ -1,9 +1,11 @@
 import React from 'react';
 
-function Clock({ minutes, seconds, clockFlash }) {
+function Clock({ minutes, seconds, remaining }) {
+  // Flash separator inbetween every elapsed second.
+  const clockFlash = (remaining % 1000 !== 0) && true;
   const classClockFlash = [
-    'Clock__flash',
-    (clockFlash ? '' : 'Clock__flash--isFlash'),
+    'Clock__separator',
+    (clockFlash ? '' : 'Clock__separator--isFlash'),
   ].join(' ');
   return (
     <div className="Clock">

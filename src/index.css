@@ -54,11 +54,11 @@ button[disabled] {
   text-align: center;
 }
 
-.Clock__flash {
+.Clock__separator {
   color: #FFF;
 }
 
-.Clock__flash--isFlash {
+.Clock__separator--isFlash {
   color: #000;
 }
 
