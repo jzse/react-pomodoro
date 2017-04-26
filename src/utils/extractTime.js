@@ -6,7 +6,6 @@ function extractTime(milliseconds) {
   return {
     minutes: time.getMinutes(),
     seconds: time.getSeconds(),
-    millseconds: time.getMilliseconds(),
   };
 }
 export default extractTime;
