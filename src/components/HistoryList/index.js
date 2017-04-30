@@ -4,26 +4,23 @@ import toPad from '../../utils/toPad';
 
 function HistoryList({ history }) {
   return (
-    <ol reversed>
-      {Object.values(history).reverse().map(item => <HistoryListItem key={item.id} {...item} />)}
+    <ol reversed className="HistoryList">
+      {Object.values(history).reverse().map(item => <HistoryItem key={item.id} {...item} />)}
     </ol>
   );
 }
 
-function HistoryListItem({ name, initial, end }) {
+function HistoryItem({ name, initial, end }) {
   const [minutes, seconds] = Object.values(extractTime(initial)).map(num =>
     toPad(num),
   );
   const formatInitial = `${minutes}:${seconds}`;
   return (
-    <li>
-      <strong>{name}</strong>
-      <div>
-        {' '}
-        <small>
-          {end.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' })} [{formatInitial}]
-        </small>
-      </div>
+    <li className="HistoryItem" title={formatInitial}>
+      <span className="HistoryItem--detail">
+        {end.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' })}
+      </span>
+      <span className="HistoryItem--name">{name}</span>
     </li>
   );
 }

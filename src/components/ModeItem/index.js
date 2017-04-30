@@ -10,10 +10,10 @@ class ModeItem extends React.Component {
     const { mode, activeMode } = this.props;
     const classes = [
       'ModeItem',
-      (mode.id === activeMode ? 'ModeItem--isActive' : ''),
-    ];
+      (mode.id === activeMode ? 'ModeItem--active' : ''),
+    ].join(' ');
     return (
-      <button className={classes.join(' ')} onClick={this.callback(mode.id)}>
+      <button className={classes} onClick={this.callback(mode.id)}>
         {mode.name}
       </button>
     );

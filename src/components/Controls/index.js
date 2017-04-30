@@ -14,25 +14,25 @@ class Controls extends React.Component {
           <button
             onClick={this.callback('start')}
             disabled={initial === 0}
-            className="Controls__Button Controls__Start"
+            className="Controls-Button Controls-Button--start"
           >
             Start
           </button>}
         {isEnabled &&
-          <button onClick={this.callback('stop')} className="Controls__Button Controls__Stop">
+          <button onClick={this.callback('stop')} className="Controls-Button Controls-Button--stop">
             Stop
           </button>}
 
         {isAlarmed &&
           remaining === 0 &&
-          <button onClick={this.callback('cancelAlarm')} className="Controls__Button Controls__Ok">
+          <button onClick={this.callback('cancelAlarm')} className="Controls-Button Controls-Button--ok">
             OK
           </button>}
 
         <button
           onClick={this.callback('reset')}
           disabled={remaining === initial}
-          className="Controls__Button Controls__Reset"
+          className="Controls-Button Controls-Button--reset"
         >
           Reset
         </button>
