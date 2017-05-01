@@ -1,5 +1,6 @@
 import React from 'react';
 import ModeItem from '../ModeItem';
+import './index.css';
 
 function ModeList({ modes, activeMode, onModeChange }) {
   return (

@@ -1,4 +1,6 @@
 import React from 'react';
+import ButtonText from '../ButtonText';
+import './index.css';
 
 class ModeItem extends React.Component {
   callback(id) {
@@ -13,9 +15,9 @@ class ModeItem extends React.Component {
       (mode.id === activeMode ? 'ModeItem--active' : ''),
     ].join(' ');
     return (
-      <button className={classes} onClick={this.callback(mode.id)}>
+      <ButtonText className={classes} onClick={this.callback(mode.id)}>
         {mode.name}
-      </button>
+      </ButtonText>
     );
   }
 }

@@ -1,0 +1,17 @@
+.ButtonText {
+  border: 0;
+  margin: 0 0.2em 0 0;
+  padding: 0;
+  background: none;
+  font-size: 32px;
+  font-weight: 300;
+  text-transform: lowercase;
+  cursor: pointer;
+}
+.ButtonText[disabled] {
+  text-decoration: line-through;
+  color: #EEE
+}
+.ButtonText:focus {
+  outline: 1px dotted #000;
+}

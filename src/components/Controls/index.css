@@ -1,0 +1,11 @@
+.Controls {
+  margin: 3em 0 3em 0;
+}
+
+.Controls-Button {
+  margin-right: 0.4em;
+}
+
+.Controls-Button--reset {
+  color: #767676;
+}
