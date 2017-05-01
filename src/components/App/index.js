@@ -8,7 +8,7 @@ import Controls from '../Controls';
 import HistoryList from '../HistoryList';
 // import TimeForm from '../TimeForm';
 
-import MODES_DEFAULT from '../../constants';
+import DEFAULTS from '../../constants';
 import toPad from '../../utils/toPad';
 import extractTime from '../../utils/extractTime';
 import './index.css';
@@ -18,13 +18,13 @@ class App extends React.Component {
     super();
     this.state = {
       delay: 1000,
-      initial: MODES_DEFAULT.pomodoro.initial,
-      remaining: MODES_DEFAULT.pomodoro.initial,
+      initial: DEFAULTS.modes.pomodoro.initial,
+      remaining: DEFAULTS.modes.pomodoro.initial,
       isEnabled: false,
       isAlarmed: false,
       volume: 0.2,
-      modes: MODES_DEFAULT,
-      activeMode: MODES_DEFAULT.pomodoro.id,
+      modes: DEFAULTS.modes,
+      activeMode: DEFAULTS.modes.pomodoro.id,
       history: {},
     };
 
