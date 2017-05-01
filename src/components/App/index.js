@@ -11,6 +11,7 @@ import HistoryList from '../HistoryList';
 import MODES_DEFAULT from '../../constants';
 import toPad from '../../utils/toPad';
 import extractTime from '../../utils/extractTime';
+import './index.css';
 
 class App extends React.Component {
   constructor() {
@@ -154,31 +155,34 @@ class App extends React.Component {
     const title = `${minutes}:${seconds} react-pomodoro`;
     return (
       <div className="App">
-        <div className="Pomodoro">
-          <Title {...{ title }} />
+        <div>
+          <div className="Pomodoro">
+            <Title {...{ title }} />
 
-          <Countdown
-            {...{ isEnabled, remaining, delay }}
-            onTick={this.handleTick}
-            onComplete={this.handleComplete}
-          />
+            <Countdown
+              {...{ isEnabled, remaining, delay }}
+              onTick={this.handleTick}
+              onComplete={this.handleComplete}
+            />
 
-          <Alarm {...{ isAlarmed, volume }} />
-          <Clock {...{ minutes, seconds, remaining, delay }} />
+            <Alarm {...{ isAlarmed, volume }} />
+            <Clock {...{ minutes, seconds, remaining, delay }} />
 
-          {/* <TimeForm
-            {...{ minutes, seconds }}
-            onTimeFormChange={this.handleTimeFormChange}
-          /> */}
+            {/* <TimeForm
+              {...{ minutes, seconds }}
+              onTimeFormChange={this.handleTimeFormChange}
+            /> */}
 
-          <ModeList {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
+            <ModeList {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
 
-          <Controls
-            {...{ isEnabled, initial, remaining, isAlarmed }}
-            onStatusChange={this.handleStatusChange}
-          />
-
-          <HistoryList {...{ history }} />
+            <Controls
+              {...{ isEnabled, initial, remaining, isAlarmed }}
+              onStatusChange={this.handleStatusChange}
+            />
+          </div>
+          <div>
+            <HistoryList {...{ history }} />
+          </div>
         </div>
       </div>
     );

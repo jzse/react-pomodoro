@@ -1,0 +1,22 @@
+.HistoryList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.HistoryItem {
+  display: flex;
+  align-items: baseline;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.HistoryItem--name {
+  flex: 1 1 auto;
+}
+
+.HistoryItem--detail {
+  flex: 0 0 auto;
+  width: 4em;
+  font-size: 75%;
+}

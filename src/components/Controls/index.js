@@ -1,4 +1,6 @@
 import React from 'react';
+import ButtonText from '../ButtonText';
+import './index.css';
 
 class Controls extends React.Component {
   callback(newStatus) {
@@ -11,31 +13,31 @@ class Controls extends React.Component {
         {!isEnabled &&
           remaining <= initial &&
           !isAlarmed &&
-          <button
+          <ButtonText
             onClick={this.callback('start')}
             disabled={initial === 0}
             className="Controls-Button Controls-Button--start"
           >
             Start
-          </button>}
+          </ButtonText>}
         {isEnabled &&
-          <button onClick={this.callback('stop')} className="Controls-Button Controls-Button--stop">
+          <ButtonText onClick={this.callback('stop')} className="Controls-Button Controls-Button--stop">
             Stop
-          </button>}
+          </ButtonText>}
 
         {isAlarmed &&
           remaining === 0 &&
-          <button onClick={this.callback('cancelAlarm')} className="Controls-Button Controls-Button--ok">
+          <ButtonText onClick={this.callback('cancelAlarm')} className="Controls-Button Controls-Button--ok">
             OK
-          </button>}
+          </ButtonText>}
 
-        <button
+        <ButtonText
           onClick={this.callback('reset')}
           disabled={remaining === initial}
           className="Controls-Button Controls-Button--reset"
         >
           Reset
-        </button>
+        </ButtonText>
       </div>
     );
   }

@@ -1,0 +1,9 @@
+.ModeItem {
+  display: block;
+  line-height: 1;
+  color: #767676;
+}
+
+.ModeItem--active {
+  color: #000;
+}

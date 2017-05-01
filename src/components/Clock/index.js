@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.css';
 
 function Clock({ minutes, seconds }) {
   const classClockFlash = [

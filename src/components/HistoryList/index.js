@@ -1,6 +1,7 @@
 import React from 'react';
 import extractTime from '../../utils/extractTime';
 import toPad from '../../utils/toPad';
+import './index.css';
 
 function HistoryList({ history }) {
   return (
