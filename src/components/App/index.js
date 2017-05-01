@@ -1,16 +1,16 @@
 import React from 'react';
-import Title from './components/Title';
-import Clock from './components/Clock';
-import Countdown from './components/Countdown';
-import Alarm from './components/Alarm';
-import ModeList from './components/ModeList';
-import Controls from './components/Controls';
-import HistoryList from './components/HistoryList';
-// import TimeForm from './components/TimeForm';
+import Title from '../Title';
+import Clock from '../Clock';
+import Countdown from '../Countdown';
+import Alarm from '../Alarm';
+import ModeList from '../ModeList';
+import Controls from '../Controls';
+import HistoryList from '../HistoryList';
+// import TimeForm from '../TimeForm';
 
-import MODES_DEFAULT from './constants';
-import toPad from './utils/toPad';
-import extractTime from './utils/extractTime';
+import MODES_DEFAULT from '../../constants';
+import toPad from '../../utils/toPad';
+import extractTime from '../../utils/extractTime';
 
 class App extends React.Component {
   constructor() {
