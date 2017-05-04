@@ -26,6 +26,7 @@ class App extends React.Component {
       modes: DEFAULTS.modes,
       activeMode: DEFAULTS.modes.pomodoro.id,
       history: {},
+      sequenceStep: 0,
     };
 
     this.historyId = 0;
@@ -60,12 +61,17 @@ class App extends React.Component {
   }
 
   handleComplete() {
+    const finalSequenceStep = DEFAULTS.sequence.length - 1;
     this.setState({
       isEnabled: false,
       isAlarmed: true,
       history: {
         ...this.addHistory(this.state.history),
       },
+      sequenceStep: this.state.activeMode === DEFAULTS.sequence[this.state.sequenceStep] &&
+        this.state.sequenceStep < finalSequenceStep
+        ? (this.state.sequenceStep += 1)
+        : 0,
     });
   }
 
@@ -102,14 +108,16 @@ class App extends React.Component {
         });
         break;
       case 'cancelAlarm':
-        this.setState({
-          remaining: this.state.initial,
-          isAlarmed: false,
-        });
+        this.handleCancelAlarm();
         break;
       default:
         throw new Error('Unknown status');
     }
+  }
+
+  handleCancelAlarm() {
+    const nextActiveMode = DEFAULTS.sequence[this.state.sequenceStep];
+    this.handleModeChange(nextActiveMode);
   }
 
   // handleTimeFormChange(newRemaining) {
