@@ -10,7 +10,8 @@
 }
 .ButtonText[disabled] {
   text-decoration: line-through;
-  color: #EEE
+  color: #EEE;
+  cursor: default;
 }
 .ButtonText:focus {
   outline: 1px dotted #000;
