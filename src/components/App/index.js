@@ -67,7 +67,7 @@ class App extends React.Component {
       },
       sequenceStep: this.state.activeMode === DEFAULTS.sequence[this.state.sequenceStep] &&
         this.state.sequenceStep < finalSequenceStep
-        ? (this.state.sequenceStep += 1)
+        ? (this.state.sequenceStep + 1)
         : 0,
     });
   }
