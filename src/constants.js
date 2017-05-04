@@ -3,19 +3,29 @@ const DEFAULTS = {
     pomodoro: {
       id: 'pomodoro',
       name: 'Pomodoro',
-      initial: 1000,
+      initial: 1500000,
     },
     breakShort: {
       id: 'breakShort',
       name: 'Short',
-      initial: 1000,
+      initial: 300000,
     },
     breakLong: {
       id: 'breakLong',
       name: 'Long',
-      initial: 1000,
+      initial: 900000,
     },
   },
+  sequence: [
+    'pomodoro',
+    'breakShort',
+    'pomodoro',
+    'breakShort',
+    'pomodoro',
+    'breakShort',
+    'pomodoro',
+    'breakLong',
+  ],
 };
 
 export default DEFAULTS;
