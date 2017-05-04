@@ -6,7 +6,6 @@ import Alarm from '../Alarm';
 import ModeList from '../ModeList';
 import Controls from '../Controls';
 import HistoryList from '../HistoryList';
-// import TimeForm from '../TimeForm';
 
 import DEFAULTS from '../../constants';
 import toPad from '../../utils/toPad';
@@ -34,8 +33,6 @@ class App extends React.Component {
     this.handleComplete = this.handleComplete.bind(this);
     this.handleModeChange = this.handleModeChange.bind(this);
     this.handleStatusChange = this.handleStatusChange.bind(this);
-    // this.handleTimeFormChange = this.handleTimeFormChange.bind(this);
-    // this.handleVolumeChange = this.handleVolumeChange.bind(this);
   }
 
   addHistory(existingHistory) {
@@ -120,31 +117,6 @@ class App extends React.Component {
     this.handleModeChange(nextActiveMode);
   }
 
-  // handleTimeFormChange(newRemaining) {
-  //   const activeMode = this.state.activeMode;
-  //   const updatedModes = {
-  //     ...this.state.modes,
-  //     [activeMode]: {
-  //       id: activeMode,
-  //       name: this.state.modes[activeMode].name,
-  //       initial: newRemaining,
-  //     },
-  //   };
-  //   this.setState({
-  //     initial: newRemaining,
-  //     remaining: newRemaining,
-  //     isEnabled: false,
-  //     isAlarmed: false,
-  //     modes: updatedModes,
-  //   });
-  // }
-
-  // handleVolumeChange(event) {
-  //   this.setState({
-  //     volume: event.target.value,
-  //   });
-  // }
-
   render() {
     const {
       isEnabled,
@@ -175,11 +147,6 @@ class App extends React.Component {
 
             <Alarm {...{ isAlarmed, volume }} />
             <Clock {...{ minutes, seconds, remaining, delay }} />
-
-            {/* <TimeForm
-              {...{ minutes, seconds }}
-              onTimeFormChange={this.handleTimeFormChange}
-            /> */}
 
             <ModeList {...{ modes, activeMode }} onModeChange={this.handleModeChange} />
 
