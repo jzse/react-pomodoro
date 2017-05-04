@@ -11,11 +11,11 @@
   font-weight: 300;
 }
 
-.HistoryItem--name {
+.HistoryItem__name {
   flex: 1 1 auto;
 }
 
-.HistoryItem--detail {
+.HistoryItem__detail {
   flex: 0 0 auto;
   width: 4em;
   font-size: 75%;

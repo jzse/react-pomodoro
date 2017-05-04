@@ -33,10 +33,10 @@ function HistoryItem({ name, initial, end, displayIntensity }) {
   const classNameHistoryItem = ['HistoryItem'].join(' ');
   return (
     <li style={styleHistoryItem} className={classNameHistoryItem} title={`${formatInitial} - ${end}`}>
-      <span className="HistoryItem--detail">
+      <span className="HistoryItem__detail">
         {end.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' })}
       </span>
-      <span className="HistoryItem--name">{name}</span>
+      <span className="HistoryItem__name">{name}</span>
     </li>
   );
 }
