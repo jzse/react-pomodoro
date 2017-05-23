@@ -1,6 +1,6 @@
 import extractTime from '../../utils/extractTime';
 
-describe('extracTime', () => {
+describe('extractTime', () => {
   it('should extract zero values', () => {
     expect(extractTime(0)).toEqual({
       minutes: 0,
@@ -38,6 +38,8 @@ describe('extracTime', () => {
     });
   });
   it('should not extract hours', () => {
-    expect(extractTime(3600000)).toThrow();
+    expect(() => {
+      extractTime(3600000);
+    }).toThrow();
   });
 });

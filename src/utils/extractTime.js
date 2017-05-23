@@ -1,5 +1,5 @@
 function extractTime(milliseconds) {
-  if (milliseconds > 3600000) {
+  if (milliseconds >= 3600000) {
     throw new Error('Milliseconds outside of bounds.');
   }
   const time = new Date(milliseconds);
