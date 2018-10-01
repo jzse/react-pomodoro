@@ -8,7 +8,7 @@
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
-    "commitizen": "^2.9.6",
+    "commitizen": "^3.0.1",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
